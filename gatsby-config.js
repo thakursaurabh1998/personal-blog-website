@@ -10,7 +10,7 @@ module.exports = {
     siteImage: '/me.jpg',
     siteHeadline: 'My personal website and blog',
     siteUrl: 'https://saurabhthakur.dev',
-    siteDescription: `Here you'll get to know about me and I will try to give my views about technology and other things that bother me.`,
+    siteDescription: `This is the place you'll get to know about me and my views about technology and other things that intrigue me.`,
     siteLanguage: 'en',
   },
   plugins: [
