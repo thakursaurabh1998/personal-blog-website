@@ -7,7 +7,7 @@ module.exports = {
     siteTitle: 'Saurabh Thakur',
     siteTitleAlt: 'Saurabh Thakur',
     author: '@thakursaurabh98',
-    siteImage: '/me.png',
+    siteImage: '/me.jpg',
     siteHeadline: 'My personal website and blog',
     siteUrl: 'https://saurabhthakur.dev',
     siteDescription: `Here you'll get to know about me and I will try to give my views about technology and other things that bother me.`,
