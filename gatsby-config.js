@@ -7,10 +7,10 @@ module.exports = {
     siteTitle: 'Saurabh Thakur',
     siteTitleAlt: 'Saurabh Thakur',
     author: '@thakursaurabh98',
-    siteImage: '/ok.png',
-    siteHeadline: '',
+    siteImage: './static/me.png',
+    siteHeadline: 'My personal website and blog',
     siteUrl: 'https://saurabhthakur.dev',
-    siteDescription: '',
+    siteDescription: `Here you'll get to know about me and I will try to give my views about technology and other things that bother me.`,
     siteLanguage: 'en',
   },
   plugins: [
@@ -28,6 +28,14 @@ module.exports = {
           },
         ],
         externalLinks: [
+          {
+            name: 'StackOverflow',
+            url: 'https://stackoverflow.com/story/thakursaurabh1998',
+          },
+          {
+            name: 'Github',
+            url: 'https://github.com/thakursaurabh1998',
+          },
           {
             name: 'Twitter',
             url: 'https://twitter.com/thakursaurabh98',
@@ -57,12 +65,12 @@ module.exports = {
         display: 'standalone',
         icons: [
           {
-            src: '/android-chrome-192x192.png',
+            src: './static/android-chrome-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/android-chrome-512x512.png',
+            src: './static/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
