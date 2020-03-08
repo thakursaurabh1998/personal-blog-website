@@ -57,7 +57,7 @@ module.exports = {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: 'Saurabh Thakur - Blog',
-        short_name: 'minimal-blog',
+        short_name: 'My Blog',
         description: 'Blog and about page',
         start_url: '/',
         background_color: '#fff',
