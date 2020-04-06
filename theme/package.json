@@ -1,33 +1,88 @@
 {
-  "private": true,
-  "name": "personal-website",
-  "description": "Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and line highlighting.",
-  "version": "1.0.1",
-  "author": "Saurabh Thakur <thakursaurabh1998@gmail.com>",
-  "license": "MIT",
-  "starter-name": "gatsby-starter-minimal-blog",
-  "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "develop:cypress": "cross-env CYPRESS_SUPPORT=y yarn develop",
-    "build:cypress": "cross-env CYPRESS_SUPPORT=y yarn build",
-    "start": "gatsby develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean"
+  "_from": "@lekoarts/gatsby-theme-minimal-blog@2.2.4",
+  "_id": "@lekoarts/gatsby-theme-minimal-blog@2.2.4",
+  "_inBundle": false,
+  "_integrity": "sha512-R0N7p4fPkdL3wvhVu3Bb+ZvGBqmlYFE2uIe1qSUQ7wf6RGQJDwEmWOi0ER2TJ9z1E66syxZljpJ3w+B/Aanquw==",
+  "_location": "/@lekoarts/gatsby-theme-minimal-blog",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@lekoarts/gatsby-theme-minimal-blog@2.2.4",
+    "name": "@lekoarts/gatsby-theme-minimal-blog",
+    "escapedName": "@lekoarts%2fgatsby-theme-minimal-blog",
+    "scope": "@lekoarts",
+    "rawSpec": "2.2.4",
+    "saveSpec": null,
+    "fetchSpec": "2.2.4"
   },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://npm.smallcase/@lekoarts%2fgatsby-theme-minimal-blog/-/gatsby-theme-minimal-blog-2.2.4.tgz",
+  "_shasum": "226918ed1c9875d1a27c977170b8f1064bedf0f2",
+  "_spec": "@lekoarts/gatsby-theme-minimal-blog@2.2.4",
+  "_where": "/Users/thakursaurabh1998/projects/personal/minimal-blog",
+  "author": {
+    "name": "LekoArts",
+    "email": "hello@lekoarts.de"
+  },
+  "bugs": {
+    "url": "https://github.com/LekoArts/gatsby-themes/issues"
+  },
+  "bundleDependencies": false,
   "dependencies": {
-    "@lekoarts/gatsby-theme-minimal-blog": "^2.2.4",
+    "@emotion/core": "^10.0.28",
+    "@lekoarts/gatsby-theme-minimal-blog-core": "^2.2.3",
+    "@mdx-js/react": "^1.5.8",
+    "@theme-ui/color": "^0.2.53",
+    "@theme-ui/components": "^0.2.50",
+    "@theme-ui/presets": "^0.2.44",
+    "gatsby-plugin-catch-links": "^2.2.1",
+    "gatsby-plugin-feed": "^2.4.1",
+    "gatsby-plugin-react-helmet": "^3.2.1",
+    "gatsby-plugin-theme-ui": "^0.2.53",
+    "gatsby-plugin-typescript": "^2.3.1",
+    "lodash.kebabcase": "^4.1.1",
+    "mdx-utils": "^0.2.0",
+    "prism-react-renderer": "^1.0.2",
+    "react-helmet": "^5.2.1",
+    "react-live": "^2.2.2",
+    "theme-ui": "^0.2.52",
+    "typeface-ibm-plex-sans": "^0.0.75"
+  },
+  "deprecated": false,
+  "description": "Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and line highlighting.",
+  "gitHead": "8b81bdddaec7f5ae116006024e160474bf2220e3",
+  "homepage": "https://themes.lekoarts.de",
+  "keywords": [
+    "gatsby",
+    "gatsby-theme",
+    "gatsby-plugin",
+    "lekoarts"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "@lekoarts/gatsby-theme-minimal-blog",
+  "peerDependencies": {
     "gatsby": "^2.13.3",
-    "gatsby-plugin-google-analytics": "^2.1.4",
-    "gatsby-plugin-manifest": "^2.2.3",
-    "gatsby-plugin-netlify": "^2.1.3",
-    "gatsby-plugin-offline": "^2.2.4",
-    "gatsby-plugin-sitemap": "^2.2.19",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
-  "devDependencies": {
-    "cross-env": "^5.2.0",
-    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.8"
-  }
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LekoArts/gatsby-themes.git",
+    "directory": "themes/gatsby-theme-minimal-blog"
+  },
+  "scripts": {
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "develop": "gatsby develop",
+    "start": "gatsby develop"
+  },
+  "version": "2.2.4"
 }
