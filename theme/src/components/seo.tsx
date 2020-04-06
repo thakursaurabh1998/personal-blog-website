@@ -39,7 +39,7 @@ const SEO = ({ title, description, pathname, image, children }: Props) => {
   }
   return (
     <Helmet title={title} defaultTitle={defaultTitle} titleTemplate={`%s | ${siteTitle}`}>
-      <html lang={siteLanguage} />
+      <html lang={siteLanguage} style="scroll-behavior: smooth;" />
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
       <meta property="og:title" content={seo.title} />
