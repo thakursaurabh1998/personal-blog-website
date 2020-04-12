@@ -14,11 +14,11 @@ At <a target="_blank" rel="noreferrer" href="https://smallcase.com/">**smallcase
 
 Growing the number of users of the product utilising offers isn't a new thing and a lot of startups are doing this in the industry. Even smallcase was already providing offers for special occasions such as **//legacy offers//** to a smaller number of people. But with the rate of growth we are having, that quickly became a bottleneck as activating offers was becoming quite a tedious task.
 
-Activating offers on smallcase platform is now a piece of cake, anyone can do this with some few clicks. This becomes possible because of the revamped offers microservice, which decouples the application and redemption of an offer from the main platform services and provides a simple interface which can be used to roll out new offers.
+Activating offers on smallcase platform is now a piece of cake, anyone can do this with some few clicks. This becomes possible because of the revamped Offers microservice, which decouples the application and redemption of an offer from the main platform services and provides a simple interface which can be used to roll out new offers.
 
 ![Dashboard with Diwali 2019 offer (design page)](./diwali-offer.png)
 
-### Setbacks with the previous implementation
+### <span id="setbacks">Setbacks with the previous implementation</span>
 
 As said the previous implementations had some problems which arose due to the scale as well the sudden necessity of applying a wide range of offers to different cohorts.
 
@@ -44,7 +44,7 @@ Let's discuss one by one, the issues which we were facing:
 
 ### sc-khata to the rescue
 
-**sc-khata**(khata is a hindi word meaning account) is a new service written with sole purpose of managing the **smallcase ledger** of all the user transactions of the smallcase platform, including all the applicable offers (moving the ledger to sc-khata is a future task, the ledger service is currenlty an old cron-job 😛).
+**sc-khata**(khata is a hindi word meaning account) is a new service written with sole purpose of managing the **smallcase ledger** of all the user transactions on the smallcase platform, including all the applicable offers (moving the ledger to sc-khata is a future task, the ledger service is currenlty an old cron-job 😛).
 
 sc-khata is based on <a target="_blank" rel="noreferrer" href="https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/ch02.html">Event Driven Architecture</a>, where it consumes the event produced by **smallcase-api** and **orders-update** service primarily, for the processing of the offer.
 
@@ -58,6 +58,115 @@ Most of the event driven services at smallcase use <a target="_blank" rel="noref
 - **Low latency:** Kafka is able to handle these messages with very low latency of the range of milliseconds, demanded by most of new use cases.
 
 So, all these advantages made Kafka an _easy choice_ to implement this service that works asynchronously parallel to the main platform services and completes the required job without a high latency value.
+
+### How sc-khata works?
+
+![Offers flow](./offer-flow.png)
+
+A _**global offer**_\* exists, if the user is eligible for the offer, the offer gets copied to the user for future use, whenever a user places an order, the offer gets redeemed from the collection of all the offers that the user has and the offer expires during invalidation.
+
+> **\*** Here global offer is any offer which is currenlty active in the smallcase eco-system
+
+There were some decisions taken to solve the [above said problems](#setbacks), let us talk about them one-by-one.
+
+### Shifting the offer logic to the database
+
+Writing the offer logic in the code was not scalable and as already said, to add a new offer, _making changes in code and redeployment_ doesn't makes sense. So now all the offers logic including eligiblity, redemption as well as invalidation, is written in the database. This provides us to **add and update offers on the fly**. 🚀
+
+> But how do you write logic in the database you ask? Right? 🤯
+
+Before explaining that, you need to know how an offer looks like to the system. A global offer document is attached below (we use <a target="_blank" rel="noreferrer" href="https://docs.mongodb.com/manual/">MongoDB</a> which is a NoSQL DB, therefore data is stored similar to what is displayed).
+
+<br />
+
+```json {11-17}
+{
+    "status" : "AVAILABLE",
+    "offerCode" : "FREE_AWI",
+    "includedScids": ["SCAW_0001"],
+    "endDate" : ISODate("2020-03-13T10:00:00.000Z"),
+    "startDate" : ISODate("2020-02-23T18:30:00.000Z"),
+    "discount" : {
+        "type" : "percentage",
+        "value" : 1.0
+    },
+    "eligibility" : {
+        "model" : "User",
+        "operation" : "count",
+        "query" : "{\"broker.userId\":\"<%=brokeruserId%>\",\"investedSmallcases\":[]}",
+        "type" : "query",
+        "expectedResult" : 1.0
+    },
+    "redemption" : {
+        "model" : "Order",
+        "operation" : "count",
+        "query" : "{\"brokeruserId\":\"<%=brokeruserId%>\", scid: \"SCAW_0001\", \"batchId\":\"<%=batchId%>\", \"date\":{\"$gte\":\"<%=startDate%>\"}",
+        "type" : "query",
+        "expectedResult" : 1.0
+    },
+    "invalidation" : {
+        "model" : "Order",
+        "operation" : "count",
+        "query" : "{\"brokeruserId\":\"<%=brokeruserId%>\",\"batchId\":\"<%=batchId%>\",\"date\":{\"$gte\":\"<%=startDate%>\"},\"buyAmount\":{\"$gt\":0},\"originalLabel\":\"BUY\"}",
+        "type" : "query",
+        "expectedResult" : 1.0
+    }
+}
+```
+
+Some keys are pretty clear like **offerCode**, **startDate** and **endDate**, and the others are explained below:
+
+- **status:** It contains the status of the offer which can either be `AVAILABLE`, `EXPIRED` or `USED`.
+- **includedScids:** This array contains all the smallcase ids on which the offer is applicable. Here the offer is only for <a target="_blank" rel="noreferrer" href="https://smallcase.com/awi">All Weather Investing(AWI)</a> smallcase.
+- **discount:** Discount can be of 2 types, either a percentage value on the charged amount, or a flat fee discount.
+- **eligibility, redemption, invalidation:** All these properties contains some specific keys, which are used in calculating whether or not to complete the respective step. Let's talk about this in detail.
+
+### Executing the offers logic
+
+For the curious people who are wondering what the keys and values mean (highlighed in the above JSON) here's what is happening.
+
+We are using the queries in the offer document to query the DB again to find out whether or not the user is eligible for the offer and so on. Every necessary value required to query is provided in the offer document already:
+
+- **type:** Currently the type can be _query_ (like the database query), but for future it can consist of values like _underscore_ where instead of querying to the database we use libraries like <a target="_blank" rel="noreferrer" href="https://underscorejs.org/">underscore</a> for calculation.
+- **operation:** This key is used when the _**type**_ key equals _query_. It can have values such as _aggregate_, _count_ which specifies the type of query which we want.
+- **model:** Here we specify the collection that needs to be queried. Again only used in case _**type**_ key equals _query_.
+- **expectedResult:** Finally the calculated result is compared to this key. If both are equal then the operation is considered to be successful.
+
+We use <a target="_blank" rel="noreferrer" href="https://mongoosejs.com/">mongoose</a> as the ODM, which let us use the above provided data perfectly to query the database by putting all the values together.
+
+Let's take an example of the `eligibility` key from the above JSON:
+
+```js
+const _ = require('underscore');
+const { query, model, operation } = offer.eligibility;
+
+// the query is parsed because the query string in
+// the offer document is an undercore string template where
+// the variables can be replaced with the provided value
+const parsedQuery = JSON.parse(
+    _.template(query)({
+        brokeruserId: event.data.brokeruserId,
+    })
+);
+// this gives us a parsed JSON query which can be further
+// passed on to the mongoose model for querying
+
+// models is an Object which contains the map of
+// the collection name to mongoose model of that collection
+const result = await models[model][operation](parsedQuery).exec();
+
+if (result === expectedResult) {
+    // do the needful
+} else {
+    // skip everything
+}
+```
+
+> We saw the code, so now, let's process what is happening logically. The query above checks the count of the user whose broker id was provided to verify if the user has **0** invested smallcases. If yes, the query returns the count as **1** which equals to the expected result which further means that the user is qualified for the offer and the offer gets pushed to the user. If the count came **0**, maybe because the user was already invested, then the user wouldn't have got the offer.
+
+But where and when does all of this happens,  is this code present afterall? sc-khata.
+
+<br />
 
 ### <span id="khata-applications">Current Applications of sc-khata</span>
 
@@ -80,4 +189,4 @@ So, all these advantages made Kafka an _easy choice_ to implement this service t
     <strong>Zerodha referrals</strong>
   </a>
 
-Work in progress.....
+##### Work in progress.....
