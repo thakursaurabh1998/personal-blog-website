@@ -16,6 +16,7 @@ const Layout = ({ children, className }: LayoutProps) => (
       styles={css({
         "*": {
           boxSizing: `inherit`,
+          scrollBehavior: 'smooth',
         },
         body: {
           margin: 0,
