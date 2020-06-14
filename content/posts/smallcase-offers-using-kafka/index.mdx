@@ -50,7 +50,7 @@ Let's discuss one by one, the issues which we were facing:
 
 ### sc-khata to the rescue
 
-**sc-khata**(khata is a hindi word meaning account) is a new service written with sole purpose of managing the **smallcase ledger** of all the user transactions on the smallcase platform, including all the applicable offers (moving the ledger to sc-khata is a future task, the ledger service is currenlty an old cron-job).
+**sc-khata**(khata is a hindi word meaning account) is a new service written with sole purpose of managing the **smallcase ledger** of all the user transactions on the smallcase platform, including all the applicable offers (moving the ledger to sc-khata is a future task, the ledger service is currently an old cron-job).
 
 Khata is based on <a target="_blank" rel="noreferrer" href="https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/ch02.html">Event Driven Architecture</a>, where it consumes the event produced by the **smallcase API** and **Order Management System** primarily, for the processing of the offer.
 
@@ -71,7 +71,7 @@ So, all these advantages made Kafka an _easy choice_ to implement this service t
 
 ![Offers flow](./offer-flow.png)
 
-**1.** An offer which is currenlty active in the smallcase eco-system exists.
+**1.** An offer which is currently active in the smallcase eco-system exists.
 
 **2.** If the user is eligible for the offer, the offer gets added to the user account for future use.
 
@@ -83,7 +83,7 @@ There were some decisions taken to solve the [above said problems](#setbacks), l
 
 ### Shifting the offer logic to the database
 
-Writing the offer logic in the code was not scalable and as already said, to add a new offer, _making changes in code and redeployment_ doesn't makes sense. So now all the offers logic including eligiblity, redemption as well as invalidation, is written in the database. This provides us to **add and update offers on the fly**. 🚀
+Writing the offer logic in the code was not scalable and as already said, to add a new offer, _making changes in code and redeployment_ doesn't makes sense. So now all the offers logic including eligibility, redemption as well as invalidation, is written in the database. This provides us to **add and update offers on the fly**. 🚀
 
 > But how do you write logic in the database you ask? Right? 🤯
 
@@ -209,7 +209,7 @@ We are using the queries in the doc (highlighted keys above) to query the DB aga
 
   To convert this non functioning string into a Mongo DB query, something clever was done. <br/>
   Nah! Just kidding we just used a simple function provided by underscore, <a target="_blank" rel="noreferrer" href="https://underscorejs.org/#template">template</a>.<br/>
-  We use this to interploate `<%= … %>` values with the specific user's properties dynamically and then parsing it to JSON.<br/>
+  We use this to interpolate `<%= … %>` values with the specific user's properties dynamically and then parsing it to JSON.<br/>
   _This helps us create a query ready to be executed._
 
 We use <a target="_blank" rel="noreferrer" href="https://mongoosejs.com/">mongoose</a> as the ODM, which let us use the above parsed JSON perfectly to query the database by putting all the values together.
