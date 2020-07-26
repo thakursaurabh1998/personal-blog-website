@@ -1,0 +1,37 @@
+---
+title: 'How to throttle that queue?'
+description: 'Learn how to throttle a kafka queue while consuming the messages according to your needs.'
+banner: ./smalltalk200.png
+date: 2020-07-27
+slug: '/how-to-throttle-that-queue'
+tags:
+  - Development
+  - Kafka
+---
+
+You are going to bed _peacefully_ after deploying your code which took a good long development time. Finally there is a new micro-service which handles the orders asynchronously by consuming the data from a Kafka queue where the API is pushing it whenever it receives an order from the client. Database and cache updates are done by this service.
+
+The stock market is going to open in the morning. **You ran all the tests, they passed fine.**
+
+##### But wait! 🚨
+
+Stock market opens, you receive the panic alert in the morning, everything is going haywire. There's this news that happened, Stark Industries have finished there prototype Iron Suit and is ready to launch in the market. People have gone crazy over the Stark stocks and there were thousands of orders just as the markets opened. 📈
+
+Your system wasn't able to handle the burst of the orders. The queue took the data from multiple API servers and this new service of ours started consuming all of this at **once**. _Database and cache choked_. The dreaded **DoS** got the best of you.
+
+#### Identifying the bottle neck
+
+The consumer service shouldn't have consumed all of the data at once from the queue, it should have been able to create a back pressure so that orders could be handled in a graceful manner.
+
+### Throttling that darn queue
+
+Kafka has become an industry standard for implementing queues and event based services. For the below examples I am using NodeJS for demonstration but the logic can be written similarly in any language. Also the library I am using is <a target="_blank" rel="noreferrer" href="https://www.npmjs.com/package/kafka-node">kafka-node</a>. Again any library can be used as the APIs provided are kafka based and not based on a library.
+
+#### Things to be taken care of
+
+1. Stop auto commiting of the messages
+2. Fetch the data to your service from the queues in batches
+3. Pause the queue
+4. Process the batch
+5. Commit the offset
+6. Resume the queue
