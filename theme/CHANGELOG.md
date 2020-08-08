@@ -3,6 +3,232 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.13...@lekoarts/gatsby-theme-minimal-blog@2.4.0) (2020-07-09)
+
+
+### Features
+
+* Add bundle-analyzer and lazy-load react-live ([#450](https://github.com/LekoArts/gatsby-themes/issues/450)) ([667fd33](https://github.com/LekoArts/gatsby-themes/commit/667fd33ce6af546cf2250af1e22395a26f45d6a2))
+
+
+
+
+
+## [2.3.13](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.12...@lekoarts/gatsby-theme-minimal-blog@2.3.13) (2020-07-09)
+
+**Note:** Version bump only for package @lekoarts/gatsby-theme-minimal-blog
+
+
+
+
+
+## [2.3.12](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.11...@lekoarts/gatsby-theme-minimal-blog@2.3.12) (2020-07-04)
+
+**Note:** Version bump only for package @lekoarts/gatsby-theme-minimal-blog
+
+
+
+
+
+## [2.3.11](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.10...@lekoarts/gatsby-theme-minimal-blog@2.3.11) (2020-07-03)
+
+
+### Bug Fixes
+
+* **deps:** update packages ([#437](https://github.com/LekoArts/gatsby-themes/issues/437)) ([5e27caf](https://github.com/LekoArts/gatsby-themes/commit/5e27caf74c2eae0e7c158fa5a15bd52ae2069ee7))
+* Set default values and replace defaultProps ([#436](https://github.com/LekoArts/gatsby-themes/issues/436)) ([d62857f](https://github.com/LekoArts/gatsby-themes/commit/d62857ffd1d2d97cfa31cb6ca37cb39db48467d0))
+
+
+
+
+
+## [2.3.10](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.9...@lekoarts/gatsby-theme-minimal-blog@2.3.10) (2020-07-02)
+
+
+### Bug Fixes
+
+* **deps:** update packages ([#429](https://github.com/LekoArts/gatsby-themes/issues/429)) ([f25dfb6](https://github.com/LekoArts/gatsby-themes/commit/f25dfb6105669f62468abc63ceb73c2fbbb73065))
+
+
+
+
+
+## [2.3.9](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.8...@lekoarts/gatsby-theme-minimal-blog@2.3.9) (2020-06-11)
+
+
+### Bug Fixes
+
+* Normalize CSS in themes & examples ([#422](https://github.com/LekoArts/gatsby-themes/issues/422)) ([9a2600c](https://github.com/LekoArts/gatsby-themes/commit/9a2600cc45d0f6729799183116f1b87d3c943749))
+
+
+
+
+
+## [2.3.8](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.7...@lekoarts/gatsby-theme-minimal-blog@2.3.8) (2020-06-11)
+
+
+### Bug Fixes
+
+* **gatsby-theme-minimal-blog:** font-size on mobile iOS ([#421](https://github.com/LekoArts/gatsby-themes/issues/421)) ([ab65ecc](https://github.com/LekoArts/gatsby-themes/commit/ab65ecceaabefc0f2f77c6f9602280a7214c34d1))
+
+
+
+
+
+## [2.3.7](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.6...@lekoarts/gatsby-theme-minimal-blog@2.3.7) (2020-06-08)
+
+**Note:** Version bump only for package @lekoarts/gatsby-theme-minimal-blog
+
+
+
+
+
+## [2.3.6](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.5...@lekoarts/gatsby-theme-minimal-blog@2.3.6) (2020-05-29)
+
+
+### Bug Fixes
+
+* **deps:** update packages ([#403](https://github.com/LekoArts/gatsby-themes/issues/403)) ([4275401](https://github.com/LekoArts/gatsby-themes/commit/427540138f6c8687dfff4163679a222ba5d49c8f))
+
+
+
+
+
+## [2.3.5](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.4...@lekoarts/gatsby-theme-minimal-blog@2.3.5) (2020-05-12)
+
+**Note:** Version bump only for package @lekoarts/gatsby-theme-minimal-blog
+
+
+
+
+
+## [2.3.4](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.3...@lekoarts/gatsby-theme-minimal-blog@2.3.4) (2020-05-04)
+
+**Note:** Version bump only for package @lekoarts/gatsby-theme-minimal-blog
+
+
+
+
+
+## [2.3.3](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.2...@lekoarts/gatsby-theme-minimal-blog@2.3.3) (2020-05-02)
+
+
+### Bug Fixes
+
+* Split header.tsx into more granular components ([#390](https://github.com/LekoArts/gatsby-themes/issues/390)) ([eeecabc](https://github.com/LekoArts/gatsby-themes/commit/eeecabc5eb9efbbcefc3f41d8e7f559569af1e12))
+
+
+
+
+
+## [2.3.2](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.1...@lekoarts/gatsby-theme-minimal-blog@2.3.2) (2020-05-02)
+
+
+### Bug Fixes
+
+* **minimal-blog:** Correct ::selection colors. Fixes [#389](https://github.com/LekoArts/gatsby-themes/issues/389) ([9936e85](https://github.com/LekoArts/gatsby-themes/commit/9936e854e2016865217558012120d020c006dfb1))
+
+
+
+
+
+## [2.3.1](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.3.0...@lekoarts/gatsby-theme-minimal-blog@2.3.1) (2020-04-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency prism-react-renderer to ^1.1.0 ([#377](https://github.com/LekoArts/gatsby-themes/issues/377)) ([c334028](https://github.com/LekoArts/gatsby-themes/commit/c334028c0768b2b332b02db3a58e255ee3c8ad25))
+* **deps:** update gatsby ([#378](https://github.com/LekoArts/gatsby-themes/issues/378)) ([8238565](https://github.com/LekoArts/gatsby-themes/commit/82385658f18c983b4ca4d83233660e9f4492a4a9))
+
+
+
+
+
+# [2.3.0](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.2.11...@lekoarts/gatsby-theme-minimal-blog@2.3.0) (2020-04-27)
+
+
+### Features
+
+* Update theme-ui to v0.3.x ([#371](https://github.com/LekoArts/gatsby-themes/issues/371)) ([67a05ac](https://github.com/LekoArts/gatsby-themes/commit/67a05ac3e1deaddfe38591739e7f50f56d49d109)), closes [/theme-ui.com/migrating#v03](https://github.com//theme-ui.com/migrating/issues/v03) [#262](https://github.com/LekoArts/gatsby-themes/issues/262)
+
+
+
+
+
+## [2.2.11](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.2.10...@lekoarts/gatsby-theme-minimal-blog@2.2.11) (2020-04-24)
+
+
+### Bug Fixes
+
+* **minimal-blog:** remove falsy values from plugins list ([#368](https://github.com/LekoArts/gatsby-themes/issues/368)) ([452afa9](https://github.com/LekoArts/gatsby-themes/commit/452afa9eae6e4a999fd118c8a81881bbe2eacec7))
+
+
+
+
+
+## [2.2.10](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.2.9...@lekoarts/gatsby-theme-minimal-blog@2.2.10) (2020-04-24)
+
+
+### Bug Fixes
+
+* **deps:** update gatsby ([#364](https://github.com/LekoArts/gatsby-themes/issues/364)) ([aac08a8](https://github.com/LekoArts/gatsby-themes/commit/aac08a809b86de28f78d2db95dc5651a0a8e640b))
+
+
+
+
+
+## [2.2.9](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.2.8...@lekoarts/gatsby-theme-minimal-blog@2.2.9) (2020-04-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency react-helmet to v6 ([#354](https://github.com/LekoArts/gatsby-themes/issues/354)) ([117d1d5](https://github.com/LekoArts/gatsby-themes/commit/117d1d5a6989d763c89137d8a9f0fb55f55efdee))
+
+
+
+
+
+## [2.2.8](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.2.7...@lekoarts/gatsby-theme-minimal-blog@2.2.8) (2020-04-13)
+
+
+### Bug Fixes
+
+* **deps:** update gatsby ([#353](https://github.com/LekoArts/gatsby-themes/issues/353)) ([4550ff3](https://github.com/LekoArts/gatsby-themes/commit/4550ff3a79ba415a4f019019300fea47d24b16c8))
+
+
+
+
+
+## [2.2.7](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.2.6...@lekoarts/gatsby-theme-minimal-blog@2.2.7) (2020-04-12)
+
+
+### Bug Fixes
+
+* Allow timeToRead to be null ([#347](https://github.com/LekoArts/gatsby-themes/issues/347)) ([5142ecf](https://github.com/LekoArts/gatsby-themes/commit/5142ecfcf10a7eb1529be335282b55368fa73047))
+
+
+
+
+
+## [2.2.6](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.2.5...@lekoarts/gatsby-theme-minimal-blog@2.2.6) (2020-04-12)
+
+
+### Bug Fixes
+
+* Use withPrefix helper in SEO component ([#346](https://github.com/LekoArts/gatsby-themes/issues/346)) ([91fc16c](https://github.com/LekoArts/gatsby-themes/commit/91fc16c3c725a2d858ee093d761530975e2173d9))
+
+
+
+
+
+## [2.2.5](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.2.4...@lekoarts/gatsby-theme-minimal-blog@2.2.5) (2020-04-12)
+
+**Note:** Version bump only for package @lekoarts/gatsby-theme-minimal-blog
+
+
+
+
+
 ## [2.2.4](https://github.com/LekoArts/gatsby-themes/compare/@lekoarts/gatsby-theme-minimal-blog@2.2.3...@lekoarts/gatsby-theme-minimal-blog@2.2.4) (2020-04-01)
 
 

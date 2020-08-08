@@ -9,7 +9,7 @@ type ListingProps = {
     date: string
     excerpt: string
     description: string
-    timeToRead: number
+    timeToRead?: number
     tags?: {
       name: string
       slug: string
@@ -19,7 +19,7 @@ type ListingProps = {
   showTags?: boolean
 }
 
-const Listing = ({ posts, className, showTags = true }: ListingProps) => (
+const Listing = ({ posts, className = ``, showTags = true }: ListingProps) => (
   <section sx={{ mb: [5, 6, 7] }} className={className}>
     {posts.map((post) => (
       <BlogListItem key={post.slug} post={post} showTags={showTags} />

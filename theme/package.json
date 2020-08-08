@@ -1,28 +1,28 @@
 {
-  "_from": "@lekoarts/gatsby-theme-minimal-blog@2.2.4",
-  "_id": "@lekoarts/gatsby-theme-minimal-blog@2.2.4",
+  "_from": "@lekoarts/gatsby-theme-minimal-blog@2.4.0",
+  "_id": "@lekoarts/gatsby-theme-minimal-blog@2.4.0",
   "_inBundle": false,
-  "_integrity": "sha512-R0N7p4fPkdL3wvhVu3Bb+ZvGBqmlYFE2uIe1qSUQ7wf6RGQJDwEmWOi0ER2TJ9z1E66syxZljpJ3w+B/Aanquw==",
+  "_integrity": "sha512-MtuAgUfg3vpDKiE7blfSr04obmXuFm+ITOtMIf7B+m/mVJS+qcMIyqOtJYfTUTFCg0adUU3YdGiXFjPUAyF92Q==",
   "_location": "/@lekoarts/gatsby-theme-minimal-blog",
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "@lekoarts/gatsby-theme-minimal-blog@2.2.4",
+    "raw": "@lekoarts/gatsby-theme-minimal-blog@2.4.0",
     "name": "@lekoarts/gatsby-theme-minimal-blog",
     "escapedName": "@lekoarts%2fgatsby-theme-minimal-blog",
     "scope": "@lekoarts",
-    "rawSpec": "2.2.4",
+    "rawSpec": "2.4.0",
     "saveSpec": null,
-    "fetchSpec": "2.2.4"
+    "fetchSpec": "2.4.0"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "http://npm.smallcase/@lekoarts%2fgatsby-theme-minimal-blog/-/gatsby-theme-minimal-blog-2.2.4.tgz",
-  "_shasum": "226918ed1c9875d1a27c977170b8f1064bedf0f2",
-  "_spec": "@lekoarts/gatsby-theme-minimal-blog@2.2.4",
+  "_resolved": "https://registry.npmjs.org/@lekoarts/gatsby-theme-minimal-blog/-/gatsby-theme-minimal-blog-2.4.0.tgz",
+  "_shasum": "cae70d1af03ec35eeba891ef431f2d081e7f1e14",
+  "_spec": "@lekoarts/gatsby-theme-minimal-blog@2.4.0",
   "_where": "/Users/thakursaurabh1998/projects/personal/minimal-blog",
   "author": {
     "name": "LekoArts",
@@ -33,28 +33,27 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "@emotion/core": "^10.0.28",
-    "@lekoarts/gatsby-theme-minimal-blog-core": "^2.2.3",
-    "@mdx-js/react": "^1.5.8",
-    "@theme-ui/color": "^0.2.53",
-    "@theme-ui/components": "^0.2.50",
-    "@theme-ui/presets": "^0.2.44",
-    "gatsby-plugin-catch-links": "^2.2.1",
-    "gatsby-plugin-feed": "^2.4.1",
-    "gatsby-plugin-react-helmet": "^3.2.1",
-    "gatsby-plugin-theme-ui": "^0.2.53",
-    "gatsby-plugin-typescript": "^2.3.1",
+    "@lekoarts/gatsby-theme-minimal-blog-core": "^2.3.10",
+    "@loadable/component": "^5.13.1",
+    "@theme-ui/color": "^0.3.1",
+    "@theme-ui/components": "^0.3.1",
+    "@theme-ui/presets": "^0.3.0",
+    "gatsby-plugin-catch-links": "^2.3.11",
+    "gatsby-plugin-feed": "^2.5.11",
+    "gatsby-plugin-react-helmet": "^3.3.10",
+    "gatsby-plugin-theme-ui": "^0.3.0",
+    "gatsby-plugin-typescript": "^2.4.14",
     "lodash.kebabcase": "^4.1.1",
     "mdx-utils": "^0.2.0",
-    "prism-react-renderer": "^1.0.2",
-    "react-helmet": "^5.2.1",
+    "prism-react-renderer": "^1.1.1",
+    "react-helmet": "^6.1.0",
     "react-live": "^2.2.2",
-    "theme-ui": "^0.2.52",
+    "theme-ui": "^0.3.1",
     "typeface-ibm-plex-sans": "^0.0.75"
   },
   "deprecated": false,
   "description": "Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and line highlighting.",
-  "gitHead": "8b81bdddaec7f5ae116006024e160474bf2220e3",
+  "gitHead": "5b7c72c48536a5ffa4f1e284a9ff007aaa9995cb",
   "homepage": "https://themes.lekoarts.de",
   "keywords": [
     "gatsby",
@@ -84,5 +83,5 @@
     "develop": "gatsby develop",
     "start": "gatsby develop"
   },
-  "version": "2.2.4"
+  "version": "2.4.0"
 }
