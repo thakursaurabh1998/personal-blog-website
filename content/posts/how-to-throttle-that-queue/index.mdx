@@ -15,23 +15,262 @@ The stock market is going to open in the morning. **You ran all the tests, they 
 
 ##### But wait! 🚨
 
-Stock market opens, you receive the panic alert in the morning, everything is going haywire. There's this news that happened, Stark Industries have finished there prototype Iron Suit and is ready to launch in the market. People have gone crazy over the Stark stocks and there were thousands of orders just as the markets opened. 📈
+Stock market opens, you receive the panic alert in the morning, everything is going haywire. There's this news that happened, Stark Industries have finished their prototype Iron Suit and is ready to launch in the market. People have gone crazy over the Stark stocks and there were thousands of orders just as the markets opened. 📈
 
 Your system wasn't able to handle the burst of the orders. The queue took the data from multiple API servers and this new service of ours started consuming all of this at **once**. _Database and cache choked_. The dreaded **DoS** got the best of you.
 
-#### Identifying the bottle neck
+#### Identifying the bottleneck
 
 The consumer service shouldn't have consumed all of the data at once from the queue, it should have been able to create a back pressure so that orders could be handled in a graceful manner.
 
+### Kafka for the queue
+
+Kafka has become an industry standard for implementing queues and event based services.
+
+> But everything has its pros and cons.
+
+Due to the simplistic approach with which Kafka is built, you can't receive data in form of single messages. What that means is that a consumer consumes data in batches. Now that one batch may contain **10** or maybe **1000** messages. There's **no way** you can tell your service to consume data message by message.
+
+One thing you can do is configure the max bytes that the consumer should receive in a single batch but still you can't forecast what will be the size of each message.
+
+> _WARNING:_ If you set max fetch bytes, less than the size of a message, then the partition gets stuck and you don't receive any more new messages from that particular partition.
+
+We will play around with some of these features that Kafka provides and set up exactly what we want.
+
 ### Throttling that darn queue
 
-Kafka has become an industry standard for implementing queues and event based services. For the below examples I am using NodeJS for demonstration but the logic can be written similarly in any language. Also the library I am using is <a target="_blank" rel="noreferrer" href="https://www.npmjs.com/package/kafka-node">kafka-node</a>. Again any library can be used as the APIs provided are kafka based and not based on a library.
+For the below examples I am using NodeJS for demonstration but the logic can be written similarly in any language. The library I am using is <a target="_blank" rel="noreferrer" href="https://www.npmjs.com/package/kafka-node">kafka-node</a>. Again any library can be used as the APIs we are going to use are kafka based and is library agnostic.
 
-#### Things to be taken care of
+#### Execution phase
 
-1. Stop auto commiting of the messages
-2. Fetch the data to your service from the queues in batches
-3. Pause the queue
-4. Process the batch
-5. Commit the offset
-6. Resume the queue
+We will write code line by line and also explain it on the way:
+
+##### 1. Create a consumer instance
+
+<br />
+
+```js
+const { ConsumerGroup } = require('kafka-node');
+
+const options = {
+    kafkaHost: 'broker:9092',
+    groupId: 'order-service',
+};
+
+const consumer = new ConsumerGroup(options, 'OrderTopic');
+
+consumer.on('message', (data) => {
+    // queue data available here
+});
+```
+
+People who are already familiar with Kafka might notice that we have created **ConsumerGroup** instead of **Consumer** to create a consumer instance. This can be discussed in detail in future maybe, but if you want some reference you can read <a target="_blank" rel="noreferrer" href="http://cloudurable.com/blog/kafka-architecture-consumers/index.html">this</a>.
+
+##### 2. Set max size of the batch
+
+<br />
+
+```js {6}
+const { ConsumerGroup } = require('kafka-node');
+
+const options = {
+    kafkaHost: 'broker:9092',
+    groupId: 'order-service',
+    fetchMaxBytes: 100 * 1024, // 100 KB
+};
+
+const consumer = new ConsumerGroup(options, 'OrderTopic');
+
+consumer.on('message', (data) => {
+    // queue data available here
+});
+```
+
+Limits the amount of data received in a single batch. This will make sure that a large amount of data isn't in the memory of the instance where the service is running. This isn't reliable and can be **very dangerous** as _auto-commit_ commits the message as soon as they are received and if the application crashes and restarts or instance stops then data is left unprocessed.
+
+##### 3. Stop auto committing of the messages
+
+<br />
+
+```js {7}
+const { ConsumerGroup } = require('kafka-node');
+
+const options = {
+    kafkaHost: 'broker:9092',
+    groupId: 'order-service',
+    fetchMaxBytes: 100 * 1024, // 100 KB
+    autoCommit: false,
+};
+
+const consumer = new ConsumerGroup(options, 'OrderTopic');
+
+consumer.on('message', (data) => {
+    // queue data available here
+});
+```
+
+We already discussed how auto commit can be dangerous and you might end up losing the data processing that could have been very important.
+
+Make sure that after switching off auto commit you are **committing the messages manually**. This is a very necessary step when auto commit is off, skipping it can lead to duplicate data processing. We will look at where and how to do manual commit in the coming steps.
+
+##### 4. Pause the queue on data reception
+
+For our throttling to work consumer shouldn't be pulling data rapidly and continuously from a tightly filled queue. Some implementations throttle the processing of data by writing the logic in the application itself which works when the consumer pulls all the data from the topic and there is some delay logic written in the application. This is **not a good solution** and brings number of problems with it:
+
+1. As discussed already, data present in the memory is lost if the application restarts because of any reason.
+2. The throttling logic becomes application dependent and any bug (like uncalled callback) can lead to false throttling and even blocking the application queue.
+3. During times of high volume traffic, the service can reach **high levels of memory consumption** because the processing is delayed but the incoming messages are high.
+
+So to counter the above problems we should **keep all the data in the queue safely and process it batch by batch**. Using Kafka we can do this by pausing a consumer when it receives a message from the topic.
+
+```js {13}
+const { ConsumerGroup } = require('kafka-node');
+
+const options = {
+    kafkaHost: 'broker:9092',
+    groupId: 'order-service',
+    fetchMaxBytes: 100 * 1024, // 100 KB
+    autoCommit: false,
+};
+
+const consumer = new ConsumerGroup(options, 'OrderTopic');
+
+consumer.on('message', (data) => {
+    consumer.pause();
+    // queue data available here
+});
+```
+
+Now when we pause the queue we already have a batch of data in the application memory with multiple messages in it. We will resume the consumer once we process this whole batch.
+
+But how do we know we have processed the whole batch?
+
+##### 5. Setting up a local, throttled queue
+
+> Wait a minute, didn't you just say that setting up an application level queue is a bad thing?
+
+_**Well, yes I did!**_
+
+But that was a different problem statement, where the throttling logic was implemented after bringing all the consumer data in the application destroying the whole purpose of using Kafka. And bringing 10 messages to the memory and processing it and then bringing the other 10 and so on, is much better than 1000 messages at once. _Geddit??_
+
+I use <a target="_blank" rel="noreferrer" href="http://caolan.github.io/async/v3/docs.html#queue">**async queue**</a> to implement a logical queue as it is well tested and accepted by the industry with an intuitive interface.
+
+```js {1,13-15,17-18,23}
+const async = require('async');
+const { ConsumerGroup } = require('kafka-node');
+
+const consumerConfig = {
+    kafkaHost: 'broker:9092',
+    groupId: 'order-service',
+    fetchMaxBytes: 100 * 1024, // 100 KB
+    autoCommit: false,
+};
+
+const consumer = new ConsumerGroup(consumerConfig, 'OrderTopic');
+
+async function processData(queueData) {
+    // perform data processing here
+}
+
+const concurrency = 5;
+const q = async.queue(processData, concurrency);
+
+consumer.on('message', (data) => {
+    consumer.pause();
+    q.push(data);
+});
+```
+
+Now as you can see at line number **23**, we are pushing the consumer data inside the async queue as soon as we receive it. This will push all the messages of the batch inside the async queue and process it accordingly. Concurrency can be set after benchmarking what suits your application.
+
+##### 6. Commit the messages
+
+async queue provides a method in which we can pass a function, which runs each time the queue gets drained. That is one of the excellent reasons why I use it as a part of this whole process.
+
+So what is the first thing we should do when the queue gets drained?<br/>
+_**We should commit the messages that we just finished processing.**_
+
+```js {20-22}
+const async = require('async');
+const { ConsumerGroup } = require('kafka-node');
+
+const consumerConfig = {
+    kafkaHost: 'broker:9092',
+    groupId: 'order-service',
+    fetchMaxBytes: 100 * 1024, // 100 KB
+    autoCommit: false,
+};
+
+const consumer = new ConsumerGroup(consumerConfig, 'OrderTopic');
+
+async function processData(queueData) {
+    // perform data processing here
+}
+
+const concurrency = 5;
+const q = async.queue(processData, concurrency);
+
+q.drain(() => {
+    consumer.commit();
+});
+
+consumer.on('message', (data) => {
+    consumer.pause();
+    q.push(data);
+});
+```
+
+**What does committing the messages mean?**
+
+By committing the messages you are telling Kafka that you have processed messages upto this part, this is just like saving a checkpoint in any video game. If the application restarts now, you will receive messages from the last saved checkpoint i.e. the recent committed offset. _Isn't that awesome?_
+
+##### 6. Resume the queue
+
+<br />
+
+```js {22}
+const async = require('async');
+const { ConsumerGroup } = require('kafka-node');
+
+const consumerConfig = {
+    kafkaHost: 'broker:9092',
+    groupId: 'order-service',
+    fetchMaxBytes: 100 * 1024, // 100 KB
+    autoCommit: false,
+};
+
+const consumer = new ConsumerGroup(consumerConfig, 'OrderTopic');
+
+async function processData(queueData) {
+    // perform data processing here
+}
+
+const concurrency = 5;
+const q = async.queue(processData, concurrency);
+
+q.drain(() => {
+    consumer.commit();
+    consumer.resume();
+});
+
+consumer.on('message', (data) => {
+    consumer.pause();
+    q.push(data);
+});
+```
+
+Now that you have finished processing the current batch and safely committed it, it's time to bring the next batch of messages. This is done just after committing the messages.
+
+And so on it continues to process data in a well mannered way.
+
+##### Here is a quick video which explains the above process
+
+<br />
+
+<div style="position: relative;width: 100%;height: 0;padding-bottom: 56.25%;">
+    <iframe style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;" src="https://www.youtube.com/embed/NoZeOF08hho" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<br />
+
+This was a quick go through of a working code to create a throttled queue using Kafka. There are a lot of details which I wasn't able to cover here because those are specific to use cases and you might or might not need them.
