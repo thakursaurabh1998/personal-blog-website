@@ -41,8 +41,8 @@ module.exports = {
             url: 'https://twitter.com/thakursaurabh98',
           },
           {
-            name: 'Instagram',
-            url: 'https://www.instagram.com/thakursaurabh98',
+            name: 'Telegram',
+            url: 'https://t.me/thakursaurabh1998',
           },
         ],
       },
