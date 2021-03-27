@@ -70,10 +70,12 @@ gatsby new minimal-blog LekoArts/gatsby-starter-minimal-blog
 | `blogPath`        | `/blog`                                              | url for the blog post overview page                                                                        |
 | `tagsPath`        | `/tags`                                              | url for the tags overview page and prefix for tags (e.g. `/tags/my-tag`)                                   |
 | `postsPath`       | `content/posts`                                      | Location of posts                                                                                          |
+| `postsPrefix`     | `/`                                                  | Prefix for all individual blog posts                                                                       |
 | `pagesPath`       | `content/pages`                                      | Location of additional pages (optional)                                                                    |
 | `mdx`             | `true`                                               | Configure `gatsby-plugin-mdx` (if your website already is using the plugin pass `false` to turn this off)  |
 | `formatString`    | `DD.MM.YYYY`                                         | Configure the date format for Date fields                                                                  |
 | `showLineNumbers` | `true`                                               | Show line numbers in code blocks                                                                           |
+| `showCopyButton`  | `true`                                               | Show copy button in code blocks                                                                            |
 | `navigation`      | `[]`                                                 | Add links to your internal sites to the left part of the header                                            |
 | `externalLinks`   | `[]`                                                 | Add links to your external sites to the right part of the header                                           |
 | `feed`            | `true`                                               | Configure `gatsby-plugin-feed` (if your website already is using the plugin pass `false` to turn this off) |
@@ -139,24 +141,6 @@ module.exports = {
     siteImage: `/banner.jpg`,
     // Twitter Handle
     author: `@lekoarts_de`,
-    // Links displayed in the header on the right side
-    externalLinks: [
-      {
-        name: `Twitter`,
-        url: `https://twitter.com/lekoarts_de`,
-      },
-      {
-        name: `Instagram`,
-        url: `https://www.instagram.com/lekoarts.de/`,
-      },
-    ],
-    // Navigation links
-    navigation: [
-      {
-        title: `Blog`,
-        slug: `/blog`,
-      },
-    ],
   },
 };
 ```
@@ -260,10 +244,11 @@ tags:
   - Tutorial
   - Dark Arts
 banner: ./defence-against-the-dark-arts.jpg
+canonicalUrl: https://random-blog-about-curses.com/curses-counter-curses-and-more
 ---
 ```
 
-**The fields `description` and `banner` are optional!** If no description is provided, an excerpt of the blog post will be used. If no banner is provided, the default `siteImage` (from `siteMetadata`) is used.
+**The fields `description`, `banner` and `canonicalUrl` are optional!** If no description is provided, an excerpt of the blog post will be used. If no banner is provided, the default `siteImage` (from `siteMetadata`) is used. If no `canonicalUrl` is provided, it will not be included in the header.
 
 The `date` field has to be written in the format `YYYY-MM-DD`!
 

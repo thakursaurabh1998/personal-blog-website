@@ -13,17 +13,22 @@ const code = {
   },
   ".prism-code": {
     fontSize: [1, 1, 2],
-    padding: 3,
+    padding: `2rem 1rem 1rem 1rem`,
     webkitOverflowScrolling: `touch`,
     backgroundColor: `transparent`,
-    overflow: `initial`,
-    float: `left`,
     minWidth: `100%`,
     mb: 0,
+    mt: 0,
+    overflow: `auto`,
     '&[data-linenumber="false"]': {
       ".token-line": {
         pl: 3,
       },
+    },
+  },
+  ".gatsby-highlight[data-language=''], .gatsby-highlight[data-language='noLineNumbers']": {
+    ".prism-code": {
+      pt: `1rem`,
     },
   },
   ".token": {
@@ -41,17 +46,15 @@ const code = {
     position: `relative`,
     webkitOverflowScrolling: `touch`,
     bg: `rgb(1, 22, 39)`,
-    overflow: `auto`,
     borderRadius: `2px`,
     mx: [0, 0, 0, -3],
     ".token-line": {
       mx: -3,
+      minWidth: `100%`,
     },
-    "pre.language-": {
-      mt: 0,
-    },
-    "pre.language-noLineNumbers": {
-      mt: 0,
+    "pre code": {
+      float: `left`,
+      minWidth: `100%`,
     },
     'pre[class*="language-"]:before': {
       bg: `white`,
@@ -115,6 +118,16 @@ const code = {
       background: `#f9ac00`,
       color: `black`,
     },
+    'pre[class~="language-php"]:before': {
+      content: `"php"`,
+      background: `#777bb3`,
+      color: `black`,
+    },
+    'pre[class~="language-py"]:before, pre[class~="language-python"]:before': {
+      content: `"py"`,
+      background: `#306998`,
+      color: `white`,
+    },
     'pre[class~="language-text"]:before': {
       content: `"text"`,
     },
@@ -155,6 +168,16 @@ const code = {
     tabSize: 4,
     hyphens: `none`,
   },
+  ".gatsby-highlight pre::-webkit-scrollbar": {
+    width: 2,
+    height: 2,
+  },
+  ".gatsby-highlight pre::-webkit-scrollbar-thumb": {
+    backgroundColor: `primary`,
+  },
+  ".gatsby-highlight pre::-webkit-scrollbar-track": {
+    background: `rgb(1, 22, 39)`,
+  },
   ".line-number-style": {
     display: `inline-block`,
     width: `3em`,
@@ -187,6 +210,12 @@ const code = {
       opacity: 0.5,
       left: `-2px`,
     },
+  },
+  ".react-live-wrapper": {
+    position: `relative`,
+  },
+  ".react-live-wrapper .code-copy-button": {
+    right: [0, 0, 0, -3],
   },
 }
 

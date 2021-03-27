@@ -21,6 +21,7 @@ type PostsProps = {
       slug: string
     }[]
   }[]
+  [key: string]: any
 }
 
 const Blog = ({ posts }: PostsProps) => {
@@ -30,8 +31,14 @@ const Blog = ({ posts }: PostsProps) => {
     <Layout>
       <SEO title="Blog" />
       <Flex sx={{ alignItems: `center`, justifyContent: `space-between`, flexFlow: `wrap` }}>
-        <Heading variant="styles.h2">Blog</Heading>
-        <TLink as={Link} sx={{ variant: `links.secondary` }} to={replaceSlashes(`/${basePath}/${tagsPath}`)}>
+        <Heading as="h1" variant="styles.h1" sx={{ marginY: 2 }}>
+          Blog
+        </Heading>
+        <TLink
+          as={Link}
+          sx={{ variant: `links.secondary`, marginY: 2 }}
+          to={replaceSlashes(`/${basePath}/${tagsPath}`)}
+        >
           View all tags
         </TLink>
       </Flex>

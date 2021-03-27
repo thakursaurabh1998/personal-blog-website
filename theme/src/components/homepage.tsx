@@ -6,7 +6,9 @@ import Title from "./title"
 import Listing from "./listing"
 import List from "./list"
 import useMinimalBlogConfig from "../hooks/use-minimal-blog-config"
+import useSiteMetadata from "../hooks/use-site-metadata"
 import replaceSlashes from "../utils/replaceSlashes"
+import { visuallyHidden } from "../styles/utils"
 // @ts-ignore
 import Hero from "../texts/hero"
 // @ts-ignore
@@ -25,21 +27,24 @@ type PostsProps = {
       slug: string
     }[]
   }[]
+  [key: string]: any
 }
 
 const Homepage = ({ posts }: PostsProps) => {
   const { basePath, blogPath } = useMinimalBlogConfig()
+  const { siteTitle } = useSiteMetadata()
 
   return (
     <Layout>
-      <section sx={{ mb: [5, 6, 7], p: { fontSize: [1, 2, 3], mt: 2 } }}>
+      <h1 sx={visuallyHidden}>{siteTitle}</h1>
+      <section sx={{ mb: [5, 6, 7], p: { fontSize: [1, 2, 3], mt: 2 }, variant: `section_hero` }}>
         <Hero />
       </section>
       <Title text="Latest Posts">
         <Link to={replaceSlashes(`/${basePath}/${blogPath}`)}>Read all posts</Link>
       </Title>
       <Listing posts={posts} showTags={false} />
-      <List>
+      <List sx={{ variant: `section_bottom` }}>
         <Bottom />
       </List>
     </Layout>
