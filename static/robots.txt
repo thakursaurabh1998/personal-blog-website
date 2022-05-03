@@ -1,3 +1,3 @@
 User-agent: *
 
-sitemap: https://saurabhthakur.dev/sitemap.xml
+sitemap: https://saurabhthakur.dev/sitemap/sitemap-index.xml
