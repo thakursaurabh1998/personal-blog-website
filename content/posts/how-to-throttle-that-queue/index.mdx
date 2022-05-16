@@ -155,7 +155,7 @@ But that was a different problem statement, where the throttling logic was imple
 
 I use <a target="_blank" rel="noreferrer" href="http://caolan.github.io/async/v3/docs.html#queue">**async queue**</a> to implement a logical queue as it is well tested and accepted by the industry with an intuitive interface.
 
-```js {1,13-15,17-18,23}
+```js {1,13-15,17-18,22}
 const async = require('async');
 const { ConsumerGroup } = require('kafka-node');
 
@@ -181,7 +181,7 @@ consumer.on('message', (data) => {
 });
 ```
 
-Now as you can see at line number **23**, we are pushing the consumer data inside the async queue as soon as we receive it. This will push all the messages of the batch inside the async queue and process it accordingly. Concurrency can be set after benchmarking what suits your application.
+Now as you can see at line number **22**, we are pushing the consumer data inside the async queue as soon as we receive it. This will push all the messages of the batch inside the async queue and process it accordingly. Concurrency can be set after benchmarking what suits your application.
 
 ##### 6. Commit the messages
 
