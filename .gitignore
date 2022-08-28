@@ -67,3 +67,9 @@ public
 .idea
 .vscode
 .DS_Store
+
+# Raw img files
+**/*_raw.*
+
+# node version manager rc
+.nvmrc
