@@ -1,0 +1,69 @@
+---
+title: "Intro to Hexagonal Architecture"
+description: "Learning the use cases of Hexagonal architecture and the problems it solve"
+banner: ./hero-image.jpg
+date: 2023-01-08
+slug: "/intro-to-hexagonal-architecture"
+tags:
+  - Architecture
+---
+
+Building large scale applications from the ground up require difficult decision making by the stake holders during a time when you don't even know how the future of your project might look like. Basic parts of a project or a service might need to be changed any time in the future due to unexpected traffic or growth, introduction of new feature set or any such infinite scenarios. Here basic parts include what data source you are using (relational, non-relational, document based, APIs etc.), what triggers you are using (any stimuli that tells your system to perform an action on the data).
+
+### Problems
+
+When a system is growing, being locked-in to a database which is performing inefficiently is a bad situation to be in, especially when you know that using something else can be way more optimised and cost saving. One more example, let's assume that the business algorithm that runs using a particular data source, has to use a new data source, you were using an API and now you have to use CSVs to ingest the same data. Another example is, you were running a large calculation on a dataset when a web-hook hits your systems, but now, the calculation should also start via incoming email requests.
+
+In above scenarios, it can be a pain to update your systems to adapt and handle a new data source, data persistence or a new trigger. In a not well thought system, this can be a pain in the <strong>\*\*\*</strong>. Using a new database can be a challenge because queries are randomly present everywhere in your codebase. The business logic is entangled with long database queries and changing a database means updating the way the business logic functions. And any old tests that you wrote, say bye bye to them, you get the idea.
+
+### Hexagonal Architecture
+
+A Hexagonal Architecture divides the system into inter-changeable and loosely-coupled set of components. This makes it easy to add, change or remove any part of the system, as rapidly as possible.
+
+> I still don't know why it is termed as hexagonal because there are no exact 6 parts of a system that we talk about, and I found a similar problem discussed on Wikipedia.
+
+![diagram.jpeg](./diagram.jpeg)
+
+Bad handwriting? I know.
+
+Let's understand what the above gibberish means
+
+- **Entity:** Let's say entity is a object of your system which the codebase and its function understand, for example a user object. When anybody asks for this entity, it's provided as a simple object which may look like this:
+
+  ```json
+  {
+    "name": "Saurabh Thakur",
+    "age": 24
+  }
+  ```
+
+  I am saying may here because different languages might make different types of objects, an ActiveRecord in Ruby or a JSON object in Javascript. By looking at an entity, nobody can tell if it's coming from a distributed cache or a database or an API.
+
+- **Repository:** It is an interface that provides getter and setter functions to fetch and save entities to the data source. The repository is the place where you write some code to fetch your data from the data source and make it look like the entity you want.
+- **Interactors:** Interactor is the component which triggers our business logic. An interactor can be anything, a web-hook, a message in a queue, an API call, anything. It uses the entity to run the business logic.
+
+The outer part of the above diagram depicts components that are highly decoupled and can be changed when the time arises without changing the business logic.
+
+### Advantages
+
+I already talked about many advantages of having a hexagonal architecture. Let me add some few more.
+
+- **Data source abstraction**
+
+  Your application doesn't care if you use MongoDB or Postgres or some new Chemical X. It only cares that the entity should look the same and that is handled in the repository interface. Switching databases or simply adding data sources can become less painful and way faster.
+
+- **Testing becomes easier and straight forward**
+
+  Your core business tests remain unchanged in the event of a data source update or a new interactor. This increases the reliability of a system during component updates. Your core logic remains untouched. Also since your data source is abstracted out, mocking data becomes much easier. Tests become faster.
+
+- **Solving the <a target="_blank" rel="noreferrer" href="https://twitter.com/tofo/status/512666251055742977">Project Paradox</a>**
+
+  Your system architecture won't be a blocker for you to suggest changing that database when it really needs to
+
+  <div style="max-width: 500px; margin: auto;">
+    <img src="./TweetbyTobiasFors.png" alt="Tweet by Tobias Fors" />
+  </div>
+
+This was my explanation of the Hexagonal Architecture, hope you learned something new!
+
+Auf Wiedersehen!
