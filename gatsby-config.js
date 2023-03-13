@@ -45,8 +45,8 @@ module.exports = {
             url: "https://t.me/thakursaurabh1998",
           },
           {
-            name: "Let's talk?",
-            url: "https://calendly.com/saurabhthakur",
+            name: "Photography",
+            url: "https://imprints.saurabhthakur.dev",
           },
         ],
       },
