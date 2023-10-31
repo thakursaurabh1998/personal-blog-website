@@ -10,7 +10,8 @@ module.exports = {
     siteImage: "/me.jpg",
     siteHeadline: "My personal website and blog",
     siteUrl: "https://saurabhthakur.dev",
-    siteDescription: "This is the place you'll get to know about me and my views about technology and other things that intrigue me.",
+    siteDescription:
+      "This is the place you'll get to know about me and my views about technology and other things that intrigue me.",
     siteLanguage: "en",
   },
   plugins: [
@@ -29,9 +30,13 @@ module.exports = {
           {
             title: "Now",
             slug: "/now",
-          }
+          },
         ],
         externalLinks: [
+          {
+            name: "Photography",
+            url: "https://imprints.saurabhthakur.dev",
+          },
           {
             name: "Github",
             url: "https://github.com/thakursaurabh1998",
@@ -41,12 +46,8 @@ module.exports = {
             url: "https://twitter.com/thakursaurabh98",
           },
           {
-            name: "Telegram",
-            url: "https://t.me/thakursaurabh1998",
-          },
-          {
-            name: "Photography",
-            url: "https://imprints.saurabhthakur.dev",
+            name: "Reach Out?",
+            url: "https://topmate.io/saurabhthakur",
           },
         ],
       },
@@ -71,7 +72,8 @@ module.exports = {
       options: {
         name: "Saurabh Thakur - Blog",
         short_name: "Saurabh Thakur",
-        description: "This is the place you'll get to know about me and my views about technology and other things that intrigue me.",
+        description:
+          "This is the place you'll get to know about me and my views about technology and other things that intrigue me.",
         start_url: "/",
         background_color: "#fff",
         theme_color: "#6B46C1",
