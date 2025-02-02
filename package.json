@@ -20,7 +20,6 @@
     "gatsby": "^4.12.1",
     "gatsby-omni-font-loader": "^2.0.0",
     "gatsby-plugin-feed": "^4.12.1",
-    "gatsby-plugin-google-analytics": "^4.13.0",
     "gatsby-plugin-google-gtag": "^4.13.0",
     "gatsby-plugin-manifest": "^4.12.1",
     "gatsby-plugin-netlify": "^4.3.1",
